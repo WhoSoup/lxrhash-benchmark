@@ -75,12 +75,11 @@ func runtest(miners int) {
 }
 
 func main() {
-	opr = lx.Hash([]byte("foo"))
-
 	fmt.Printf("Benchmarking LXR Hash\n")
 	fmt.Println("=====================================")
 	lx.Verbose(true)
 	lx.Init(lxr.Seed, lxr.MapSizeBits, lxr.HashSize, lxr.Passes)
+	opr = lx.Hash([]byte("foo"))
 
 	fmt.Printf("%10s = %x, %d, %d, %d\n", "Hash Init", lxr.Seed, lxr.MapSizeBits, lxr.HashSize, lxr.Passes)
 	c, _ := cpu.Info()

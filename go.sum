@@ -13,6 +13,8 @@ github.com/go-ole/go-ole v1.2.4/go.mod h1:XCwSNxSkXRo4vlyPy93sltvi/qJq0jqQhjqQNI
 github.com/pegnet/LXR256 v0.0.0-20190721001507-5e925f415fa2/go.mod h1:11Z6s/PoxMH3ON6Kh+2MxNFdaq9op2sgvIAqg52d/3I=
 github.com/pegnet/LXRHash v0.0.0-20190726144200-a35b17bbf85c h1:/3H7wWMIg/X/vvnkaVL48HrEm9WbTW/H/mFr8bKVeAI=
 github.com/pegnet/LXRHash v0.0.0-20190726144200-a35b17bbf85c/go.mod h1:0zBp9GFy9F77zuQbPkAmdUBRiptMaJ1V96eVFdMnXZA=
+github.com/pegnet/LXRHash v0.0.0-20190729193922-452b32b2d231 h1:/kqjIK3ufejdrpUwWdk0hdALErfY/37uEffjFE5Pa0Q=
+github.com/pegnet/LXRHash v0.0.0-20190729193922-452b32b2d231/go.mod h1:0zBp9GFy9F77zuQbPkAmdUBRiptMaJ1V96eVFdMnXZA=
 github.com/pegnet/OracleRecord v0.0.2/go.mod h1:VrY7Shn4oSCli47CsUYBFjH68IenGYtnLaXaaivepu4=
 github.com/pegnet/pegnet v0.0.2/go.mod h1:FUyEs8fyLOzPXZgyqXcqiOhQi58loNtujykIbxxoKbQ=
 github.com/shirou/gopsutil v2.18.12+incompatible h1:1eaJvGomDnH74/5cF4CTmTbLHAriGFsTZppLXDX93OM=

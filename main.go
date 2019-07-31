@@ -1,7 +1,9 @@
 package main
 
 import (
+	"context"
 	"fmt"
+	"os"
 	"runtime"
 	"time"
 
@@ -82,7 +84,16 @@ func main() {
 	opr = lx.Hash([]byte("foo"))
 
 	fmt.Printf("%10s = %x, %d, %d, %d\n", "Hash Init", lxr.Seed, lxr.MapSizeBits, lxr.HashSize, lxr.Passes)
-	c, _ := cpu.Info()
+	ctx := context.Background()
+	to, cancel := context.WithTimeout(ctx, time.Second*3)
+	defer cancel()
+	c, err := cpu.InfoWithContext(to)
+	if err != nil {
+		fmt.Println("There was an error querying the CPU info. Please try again.")
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
 	fmt.Printf("%10s = %s\n", "CPU", c[0].ModelName)
 	cores := runtime.NumCPU()
 	fmt.Printf("%10s = %d\n", "Cores", cores)

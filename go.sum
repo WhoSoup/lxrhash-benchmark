@@ -15,6 +15,8 @@ github.com/pegnet/LXRHash v0.0.0-20190726144200-a35b17bbf85c h1:/3H7wWMIg/X/vvnk
 github.com/pegnet/LXRHash v0.0.0-20190726144200-a35b17bbf85c/go.mod h1:0zBp9GFy9F77zuQbPkAmdUBRiptMaJ1V96eVFdMnXZA=
 github.com/pegnet/LXRHash v0.0.0-20190729193922-452b32b2d231 h1:/kqjIK3ufejdrpUwWdk0hdALErfY/37uEffjFE5Pa0Q=
 github.com/pegnet/LXRHash v0.0.0-20190729193922-452b32b2d231/go.mod h1:0zBp9GFy9F77zuQbPkAmdUBRiptMaJ1V96eVFdMnXZA=
+github.com/pegnet/LXRHash v0.0.0-20190806215027-2c3ac3baf00d h1:zE0clII5SVvyUqGdQ6prCL555kItIRbjrdNX+TJxgJg=
+github.com/pegnet/LXRHash v0.0.0-20190806215027-2c3ac3baf00d/go.mod h1:0zBp9GFy9F77zuQbPkAmdUBRiptMaJ1V96eVFdMnXZA=
 github.com/pegnet/OracleRecord v0.0.2/go.mod h1:VrY7Shn4oSCli47CsUYBFjH68IenGYtnLaXaaivepu4=
 github.com/pegnet/pegnet v0.0.2/go.mod h1:FUyEs8fyLOzPXZgyqXcqiOhQi58loNtujykIbxxoKbQ=
 github.com/shirou/gopsutil v2.18.12+incompatible h1:1eaJvGomDnH74/5cF4CTmTbLHAriGFsTZppLXDX93OM=

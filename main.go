@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"runtime"
+	"sync/atomic"
 	"time"
 
 	"github.com/shirou/gopsutil/cpu"
@@ -19,32 +20,24 @@ var opr []byte
 
 func runtest(miners int) {
 
-	stoppers := make([]chan bool, miners)
-	for i := range stoppers {
-		stoppers[i] = make(chan bool, 1)
-	}
+	running := true
+	done := make(chan int, miners)
 
-	results := make(chan int, miners)
+	var hashes uint64
 
 	start := time.Now()
 	for i := 0; i < miners; i++ {
 		go func(id int) {
-			hashes := 0
 			n := newninc(id)
-			for {
-				select {
-				case <-stoppers[id]:
-					results <- hashes
-					return
-				default:
-				}
-
+			for running {
 				lx.Hash(append(opr, n.Nonce...))
-				hashes++
+				atomic.AddUint64(&hashes, 1)
 				n.next()
 			}
+			done <- 1
 		}(i)
 	}
+
 	for i := 0; i < 60; i++ {
 		fmt.Printf("Running 60 second test with %d miners: %ds", miners, i)
 		time.Sleep(time.Second)
@@ -53,15 +46,14 @@ func runtest(miners int) {
 	fmt.Println()
 
 	percent, _ := cpu.Percent(0, true)
-	for _, s := range stoppers {
-		s <- true
+	running = false
+	dur := time.Since(start)
+	total := hashes
+
+	for i := 0; i < miners; i++ {
+		<-done
 	}
 
-	total := 0
-	for i := 0; i < miners; i++ {
-		total += <-results
-	}
-	dur := time.Since(start)
 	rate := float64(total) / dur.Seconds()
 	fmt.Println("Finished test in", dur)
 	fmt.Printf("%15s:", "CPU Usage")
@@ -85,7 +77,7 @@ func main() {
 
 	fmt.Printf("%10s = %x, %d, %d, %d\n", "Hash Init", lxr.Seed, lxr.MapSizeBits, lxr.HashSize, lxr.Passes)
 	ctx := context.Background()
-	to, cancel := context.WithTimeout(ctx, time.Second*3)
+	to, cancel := context.WithTimeout(ctx, time.Second*5)
 	defer cancel()
 	c, err := cpu.InfoWithContext(to)
 	if err != nil {
@@ -106,7 +98,8 @@ func main() {
 	fmt.Printf("%10s = %s\n", "Platform", h.Platform)
 	fmt.Println("=====================================")
 
-	for i := 1; i <= cores+2; i++ {
-		runtest(i)
+	runtest(1)
+	if cores > 1 {
+		runtest(cores)
 	}
 }

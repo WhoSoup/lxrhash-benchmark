@@ -18,7 +18,7 @@ import (
 var lx lxr.LXRHash
 var opr []byte
 
-func runtest(miners int) {
+func runtest(miners int, anon bool) {
 
 	running := true
 	done := make(chan int, miners)
@@ -27,15 +27,27 @@ func runtest(miners int) {
 
 	start := time.Now()
 	for i := 0; i < miners; i++ {
-		go func(id int) {
-			n := newninc(id)
-			for running {
-				lx.Hash(append(opr, n.Nonce...))
-				atomic.AddUint64(&hashes, 1)
-				n.next()
-			}
-			done <- 1
-		}(i)
+		if anon {
+			go func(id int) {
+				n := newninc(id)
+				for running {
+					lx.HashWithAnonFuncs(append(opr, n.Nonce...))
+					atomic.AddUint64(&hashes, 1)
+					n.next()
+				}
+				done <- 1
+			}(i)
+		} else {
+			go func(id int) {
+				n := newninc(id)
+				for running {
+					lx.Hash(append(opr, n.Nonce...))
+					atomic.AddUint64(&hashes, 1)
+					n.next()
+				}
+				done <- 1
+			}(i)
+		}
 	}
 
 	for i := 0; i < 60; i++ {
@@ -98,8 +110,6 @@ func main() {
 	fmt.Printf("%10s = %s\n", "Platform", h.Platform)
 	fmt.Println("=====================================")
 
-	runtest(1)
-	if cores > 1 {
-		runtest(cores)
-	}
+	runtest(cores, false)
+	runtest(cores, true)
 }
